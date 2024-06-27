@@ -13,7 +13,7 @@ import (
 
 var (
 	// Version is the version of the application
-	Version string
+	Version = "0.1.1"
 	flagSet = flag.NewFlagSet("kubenorm", flag.ExitOnError)
 
 	// Flags
@@ -33,15 +33,15 @@ var (
 )
 
 func main() {
+	flagSet.Parse(os.Args[1:])
 	flagSet.Usage = func() {
 		fmt.Println(helpMsg)
 	}
-	flagSet.Parse(os.Args[1:])
 
 	var rvalue string
 	if *version {
 		rvalue = versionMsg
-	} else if flag.NArg() > 0 {
+	} else if flagSet.NFlag() > 0 {
 		rvalue = handleScale()
 	} else {
 		rvalue = helpMsg
